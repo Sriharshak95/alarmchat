@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "174025676133",
+    "firebase_url": "https://alarmchat-700ad.firebaseio.com",
+    "project_id": "alarmchat-700ad",
+    "storage_bucket": "alarmchat-700ad.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:174025676133:android:bf07a149b73efd34557d8c",
+        "android_client_info": {
+          "package_name": "com.alarmchat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "174025676133-5ubklo0dh76hotem1u4s0fu66trdk2c5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.alarmchat",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "174025676133-uruviri801ftrdght8flaue01sg0d3os.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAgS46tqCh8f0L8oXOv1B70jGSr30r7o20"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "174025676133-uruviri801ftrdght8flaue01sg0d3os.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
