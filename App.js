@@ -4,7 +4,8 @@ import {
   StyleSheet,
   View,
   Text,
-  StatusBar
+  StatusBar,
+  ActivityIndicator
 } from 'react-native';
 
 
@@ -12,7 +13,13 @@ import { NativeRouter, Route,Redirect } from 'react-router-native';
 import Login from './login';
 import Register from './register';
 import Main from './main';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import reducer from './store/reducer';
 import tokenGetter from './utils/auth';
+import RingAlarm from './ringAlarm';
+
+const store = createStore(reducer);
 
 const App = () => {
 
@@ -34,17 +41,20 @@ const App = () => {
   },[userAuthenticated]);
 
   return (
-    <NativeRouter>
-      <StatusBar barStyle="dark-content" />
-      <Route exact path="/">
-      {
-        (inflight)? <Text>Loading....</Text>: (userAuthenticated)?<Main />:<Login />
-      }
-      </Route>
-      <Route path='/login' component={Login}/>
-      <Route path="/main" component={Main}/>
-      <Route path="/about" component={Register}/>
-    </NativeRouter>
+    <Provider store={store}>
+      <NativeRouter>
+        <StatusBar barStyle="dark-content" />
+        <Route exact path="/">
+        {
+          (inflight)? <ActivityIndicator/>: (userAuthenticated)?<Main />:<Login />
+        }
+        </Route>
+        <Route path='/login' component={Login}/>
+        <Route path="/main" component={Main}/>
+        <Route path="/about" component={Register}/>
+        <Route path="/ring" component={RingAlarm}/>
+      </NativeRouter>
+    </Provider>
   );
 };
 

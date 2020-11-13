@@ -191,6 +191,8 @@ dependencies {
 
     implementation project(':react-native-contacts')
 
+    implementation project(':react-native-notification-sounds')
+
     addUnimodulesDependencies()
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {

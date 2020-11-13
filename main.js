@@ -6,12 +6,14 @@ import {
   View,
   Text,
   TextInput,
-  Pressable
+  Pressable,
+  Button
 } from 'react-native';
 import Navbar from './utils/navbar';
-import ImportContacts from './importContacts';
-import ContactList from './contacts';
-import List from './list';
+// import ImportContacts from './importContacts';
+// import ContactList from './contacts';
+// import List from './list';
+import SetTime from './set_time';
 import * as SecureStore from 'expo-secure-store';
 
 const Main = ({history,location,match}) => {
@@ -44,7 +46,8 @@ const Main = ({history,location,match}) => {
   return (
     <View style={{flex: 1}}>
       <Navbar/>
-      {(contacts)?<ContactList loadBack={getContacts}/>:<ImportContacts loadContacts={getContacts} {...profile} />}
+      {/*(contacts)?<ContactList loadBack={getContacts}/>:<ImportContacts loadContacts={getContacts} {...profile} />*/}
+      <SetTime/>
     </View>
   );
 };

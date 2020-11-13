@@ -8,6 +8,13 @@ target 'alarmChat' do
 
   use_react_native!(:path => config["reactNativePath"])
 
+  pod 'RNSound', :path => '../node_modules/react-native-sound'
+
+  pod 'RNSoundRecorder', :path => '../node_modules/react-native-sound-recorder'
+
+
+  pod 'react-native-notification-sounds', :path => '../node_modules/react-native-notification-sounds'
+
   target 'alarmChatTests' do
     inherit! :complete
     # Pods for testing

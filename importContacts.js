@@ -26,7 +26,7 @@ const ImportContacts = ({loadContacts,myName}) => {
           style={{marginTop:13}}
         >
           <View style={{backgroundColor:'#20232a',padding:13,alignItems:'center',borderRadius:10}}>
-            <Text style={{color:'#ffffff'}}>Import Contacts</Text>
+            <Text style={{color:'#ffffff'}}>Set Time</Text>
           </View>
         </Pressable>
         <Text style={{marginTop:10,fontSize:14,color:'#717171'}}>Start sending alarms to your peers</Text>

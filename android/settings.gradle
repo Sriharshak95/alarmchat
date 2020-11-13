@@ -1,4 +1,10 @@
 rootProject.name = 'alarmChat'
+include ':react-native-notification-sounds'
+project(':react-native-notification-sounds').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-notification-sounds/android')
+include ':react-native-sound'
+project(':react-native-sound').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-sound/android')
+include ':@gregfrench_react-native-wheel-picker'
+project(':@gregfrench_react-native-wheel-picker').projectDir = new File(rootProject.projectDir, '../node_modules/@gregfrench/react-native-wheel-picker/android')
 apply from: '../node_modules/react-native-unimodules/gradle.groovy'; includeUnimodulesProjects()
 apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
 include ':app'
