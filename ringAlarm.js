@@ -1,22 +1,23 @@
 /* Set time for the application */
 
-import React, {useState,useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
   Pressable,
   PermissionsAndroid
 } from 'react-native';
-import {useSelector} from 'react-redux';
-import AudioRecorderPlayer,{
+import { useSelector } from 'react-redux';
+import AudioRecorderPlayer, {
   AudioEncoderAndroidType,
-  AudioSourceAndroidType,} from 'react-native-audio-recorder-player';
+  AudioSourceAndroidType,
+} from 'react-native-audio-recorder-player';
 import moment from 'moment';
 import { Icon } from 'react-native-elements';
-  const audioRecorderPlayer = new AudioRecorderPlayer();
+const audioRecorderPlayer = new AudioRecorderPlayer();
 
 
-const checkPermissions = async () =>{
+const checkPermissions = async () => {
 
   if (Platform.OS === 'android') {
     try {
@@ -63,30 +64,32 @@ const checkPermissions = async () =>{
 }
 
 const RingAlarm = () => {
-  const [currentPositionSec,setcurrentPositionSec] = useState(0);
-  const [isPlayVisible,togglePlayRecord] = useState(true);
-  const [isPauseVisible,togglePauseRecord] = useState(false);
+  const [currentPositionSec, setcurrentPositionSec] = useState(0);
+  const [isPlayVisible, togglePlayRecord] = useState(true);
+  const [isPauseVisible, togglePauseRecord] = useState(false);
 
   const time = useSelector(state => state.time);
 
-  useEffect(()=>{
-    setTimeout(function(){
-      console.log("Derf")
-    },AlarmFunction());
-  },[]);
+  useEffect(() => {
+    // setTimeout(function(){
+    //   console.log("Derf")
+    // },AlarmFunction());
+    AlarmFunction();
+  }, []);
 
-  const AlarmFunction = () =>{
-    let setTime = moment(time,['h:mm A']).format();
+  const AlarmFunction = () => {
+    let setTime = moment(time, ['h:mm A']).format();
     let presentTime = moment(new Date()).format();
     let x = new moment(setTime);
     let y = new moment(presentTime);
+    console.log(presentTime);
     let diff = moment.duration(x.diff(y)).asMilliseconds();
-    if(diff<0){
-      let nextDay = moment(new Date()).add(1,'day');
+    if (diff < 0) {
+      let nextDay = moment(new Date()).add(1, 'day');
       nextDay = nextDay.set({
-        hour:moment(time,['h:mm A']).get('hour'),
-        minute:moment(time,['h:mm A']).get('minute'),
-        second:moment(time,['h:mm A']).get('second'),
+        hour: moment(time, ['h:mm A']).get('hour'),
+        minute: moment(time, ['h:mm A']).get('minute'),
+        second: moment(time, ['h:mm A']).get('second'),
       })
       setTime = moment(nextDay).format();
       presentTime = moment(new Date()).format();
@@ -95,7 +98,7 @@ const RingAlarm = () => {
       diff = moment.duration(x.diff(y)).asMilliseconds();
       return diff;
     }
-    else{   
+    else {
       return diff;
     }
   };
@@ -110,11 +113,11 @@ const RingAlarm = () => {
     AudioSourceAndroid: AudioSourceAndroidType.MIC
   };
 
-  const milltoSecs = (duration) =>{
+  const milltoSecs = (duration) => {
     var milliseconds = parseInt((duration % 1000) / 100),
-    seconds = Math.floor((duration / 1000) % 60),
-    minutes = Math.floor((duration / (1000 * 60)) % 60),
-    hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+      seconds = Math.floor((duration / 1000) % 60),
+      minutes = Math.floor((duration / (1000 * 60)) % 60),
+      hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
 
     hours = (hours < 10) ? "0" + hours : hours;
     minutes = (minutes < 10) ? "0" + minutes : minutes;
@@ -129,11 +132,11 @@ const RingAlarm = () => {
     togglePlayRecord(false);
     audioRecorderPlayer.addPlayBackListener((e) => {
       if (e.current_position === e.duration) {
-        console.log('finished'+e.duration);
-        audioRecorderPlayer.stopPlayer().catch(err=>console.log(err.message));
+        console.log('finished' + e.duration);
+        audioRecorderPlayer.stopPlayer().catch(err => console.log(err.message));
         togglePlayRecord(true);
         togglePauseRecord(false);
-            }
+      }
       setcurrentPositionSec(milltoSecs(e.current_position));
       return;
     });
@@ -148,42 +151,42 @@ const RingAlarm = () => {
   };
 
   return (
-      <View style={{flex:2,alignItems:'center',justifyContent:'center'}}>
-        <Text style={{marginTop:10,fontSize:18}}>Wait for your Alarm to ring...</Text>
-        <Text>{(currentPositionSec!==0)?currentPositionSec:null}</Text>
-        <View style={{flexDirection:'row'}}>
-        {(isPlayVisible)?<View>
+    <View style={{ flex: 2, alignItems: 'center', justifyContent: 'center' }}>
+      <Text style={{ marginTop: 10, fontSize: 18 }}>Wait for your Alarm to ring...</Text>
+      <Text>{(currentPositionSec !== 0) ? currentPositionSec : null}</Text>
+      <View style={{ flexDirection: 'row' }}>
+        {(isPlayVisible) ? <View>
           <Pressable
             onPress={onStartPlay}
-            style={{marginTop:13}}
+            style={{ marginTop: 13 }}
           >
-          <View style={{backgroundColor:'#20232a',padding:13,alignItems:'center',borderRadius:50}}>
-            <Icon
-              reverse
-              name='ios-play-outline'
-              type='ionicon'
-              color='#517fa4'
-            />
-          </View>
+            <View style={{ backgroundColor: '#20232a', padding: 13, alignItems: 'center', borderRadius: 50 }}>
+              <Icon
+                reverse
+                name='ios-play-outline'
+                type='ionicon'
+                color='#517fa4'
+              />
+            </View>
           </Pressable>
-        </View>:null}
-        {(isPauseVisible)?<View>
+        </View> : null}
+        {(isPauseVisible) ? <View>
           <Pressable
             onPress={onStopPlay}
-            style={{marginTop:13}}
+            style={{ marginTop: 13 }}
           >
-          <View style={{backgroundColor:'#20232a',padding:13,alignItems:'center',borderRadius:50}}>
-            <Icon
-              reverse
-              name='ios-pause-outline'
-              type='ionicon'
-              color='#517fa4'
-            />
-          </View>
+            <View style={{ backgroundColor: '#20232a', padding: 13, alignItems: 'center', borderRadius: 50 }}>
+              <Icon
+                reverse
+                name='ios-pause-outline'
+                type='ionicon'
+                color='#517fa4'
+              />
+            </View>
           </Pressable>
-        </View>:null}
-        </View>
+        </View> : null}
       </View>
+    </View>
   );
 };
 

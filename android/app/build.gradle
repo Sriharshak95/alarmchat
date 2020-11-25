@@ -193,6 +193,8 @@ dependencies {
 
     implementation project(':react-native-notification-sounds')
 
+    implementation project(':react-native-alarm-notification')
+
     addUnimodulesDependencies()
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {

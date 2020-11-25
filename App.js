@@ -5,6 +5,7 @@ import {
   View,
   Text,
   StatusBar,
+  Pressable,
   ActivityIndicator
 } from 'react-native';
 
@@ -18,15 +19,16 @@ import { createStore } from 'redux';
 import reducer from './store/reducer';
 import tokenGetter from './utils/auth';
 import RingAlarm from './ringAlarm';
-
+import ReactNativeAN from 'react-native-alarm-notification';
 const store = createStore(reducer);
 
 const App = () => {
 
   const [userAuthenticated,setFlag] = useState(false);
   const [inflight,setInflight] = useState(true);
-  
+
   useEffect(()=>{
+    ScheduleAlarm();
     tokenGetter('token','peer','peerId').then((data)=>{
       setInflight(false);
       if(data){
@@ -40,10 +42,66 @@ const App = () => {
     })
   },[userAuthenticated]);
 
+  const deleteAlarm = async() =>{
+    const alarms = await ReactNativeAN.getScheduledAlarms();
+    alarms.map(l=>{
+      console.log(`alarm: ${l.day}-${l.month}-${l.year} ${l.hour}:${l.minute}:${l.second}`)
+    }) 
+    ReactNativeAN.deleteAlarm(31);
+    console.log(alarms);
+  }
+
+  const ScheduleAlarm = async() =>{
+    try{
+
+      const fireDate = ReactNativeAN.parseDate(new Date(Date.now() + 4000));
+
+      const alarmNotifData = {
+        title: "My Notification Title",
+        message: "My Notification Message",
+        channel: "my_channel_id",
+        small_icon: "ic_launcher",
+        loop_sound:true,
+        sound_name:"default.mp3",
+        // You can add any additional data that is important for the notification
+        // It will be added to the PendingIntent along with the rest of the bundle.
+        // e.g.
+          data: { foo: "bar" },
+      };
+
+      console.log(fireDate);
+      const alarm = await ReactNativeAN.scheduleAlarm({ ...alarmNotifData, fire_date: fireDate })
+      console.log(alarm);
+    
+    }catch(e){
+      console.log(e);
+    }
+  };
+
+  const stopAlarmSound = async() =>{
+    ReactNativeAN.stopAlarmSound();
+  }
+
   return (
     <Provider store={store}>
       <NativeRouter>
         <StatusBar barStyle="dark-content" />
+        <Pressable
+          onPress={deleteAlarm}
+          style={{marginTop:13}}
+        >
+          <View style={{backgroundColor:'#20232a',padding:13,alignItems:'center',borderRadius:10}}>
+            <Text style={{color:'#ffffff'}}>Set Alarm</Text>
+          </View>
+        </Pressable>
+        <Pressable
+          onPress={stopAlarmSound}
+          style={{marginTop:13}}
+        >
+          <View style={{backgroundColor:'#20232a',padding:13,alignItems:'center',borderRadius:10}}>
+            <Text style={{color:'#ffffff'}}>Stop Alarm</Text>
+          </View>
+        </Pressable>
         <Route exact path="/">
         {
           (inflight)? <ActivityIndicator/>: (userAuthenticated)?<Main />:<Login />
