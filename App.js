@@ -28,7 +28,7 @@ const App = () => {
   const [inflight,setInflight] = useState(true);
 
   useEffect(()=>{
-    ScheduleAlarm();
+    // ScheduleAlarm();
     tokenGetter('token','peer','peerId').then((data)=>{
       setInflight(false);
       if(data){
@@ -45,16 +45,17 @@ const App = () => {
   const deleteAlarm = async() =>{
     const alarms = await ReactNativeAN.getScheduledAlarms();
     alarms.map(l=>{
-      console.log(`alarm: ${l.day}-${l.month}-${l.year} ${l.hour}:${l.minute}:${l.second}`)
+      console.log(`alarm: ${l.day}-${l.month}-${l.year} ${l.hour}:${l.minute}:${l.second}---${l.id}`)
     }) 
-    ReactNativeAN.deleteAlarm(31);
     console.log(alarms);
+    // ReactNativeAN.deleteAlarm(64);
   }
 
   const ScheduleAlarm = async() =>{
     try{
 
-      const fireDate = ReactNativeAN.parseDate(new Date(Date.now() + 4000));
+      const fireDate = ReactNativeAN.parseDate(new Date("2020-12-17T12:54:07.732Z"));
+      console.log(fireDate);
 
       const alarmNotifData = {
         title: "My Notification Title",
@@ -62,16 +63,13 @@ const App = () => {
         channel: "my_channel_id",
         small_icon: "ic_launcher",
         loop_sound:true,
-        sound_name:"default.mp3",
+        sound_name:"newopen.mp3",
         // You can add any additional data that is important for the notification
         // It will be added to the PendingIntent along with the rest of the bundle.
         // e.g.
           data: { foo: "bar" },
       };
-
-      console.log(fireDate);
       const alarm = await ReactNativeAN.scheduleAlarm({ ...alarmNotifData, fire_date: fireDate })
-      console.log(alarm);
     
     }catch(e){
       console.log(e);
@@ -88,6 +86,15 @@ const App = () => {
         <StatusBar barStyle="dark-content" />
         <Pressable
           onPress={deleteAlarm}
+          style={{marginTop:13}}
+        >
+          <View style={{backgroundColor:'#20232a',padding:13,alignItems:'center',borderRadius:10}}>
+            <Text style={{color:'#ffffff'}}>Delete Alarm</Text>
+          </View>
+        </Pressable>
+        <StatusBar barStyle="dark-content" />
+        <Pressable
+          onPress={ScheduleAlarm}
           style={{marginTop:13}}
         >
           <View style={{backgroundColor:'#20232a',padding:13,alignItems:'center',borderRadius:10}}>
