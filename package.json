@@ -31,6 +31,7 @@
     "react-native-audio-recorder-player": "^2.6.0-rc3",
     "react-native-contacts": "^5.2.5",
     "react-native-elements": "^2.3.2",
+    "react-native-file-picker": "0.0.19",
     "react-native-notification-sounds": "^0.5.2",
     "react-native-push-notification": "^5.1.0",
     "react-native-sound": "^0.11.0",

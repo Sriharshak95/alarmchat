@@ -36,23 +36,14 @@ const Main = ({ history, location, match }) => {
     }).catch(error => console.log(error));
   }, []);
 
-  const testPush = () => {
-    PushNotification.localNotificationSchedule({
-      title: 'My notification title',
-      date: new Date(new Date().getTime() + 3000),
-      message: 'My notification Message',
-      allowWhileIdle: false
-    });
-  }
-
   const findCoords = () => {
     navigator.geolocation.getCurrentPosition(
       position => {
-        // fetch('https://maps.googleapis.com/maps/api/timezone/json?location=' + position.coords.latitude + ',' + position.coords.longitude + '&timestamp=1331161200&key=AIzaSyCorSzOVJi3Nw9_EdZ01jxFaKtIQYaNjR8').then((response) => response.json()).then((json) => {
-        //   console.log(moment().tz(json.timeZoneId).format());
-        // }).catch((error) => {
-        //   console.error(error);
-        // })
+        fetch('https://maps.googleapis.com/maps/api/timezone/json?location=' + position.coords.latitude + ',' + position.coords.longitude + '&timestamp=1331161200&key=AIzaSyCorSzOVJi3Nw9_EdZ01jxFaKtIQYaNjR8').then((response) => response.json()).then((json) => {
+          console.log(moment().tz(json.timeZoneId).format());
+        }).catch((error) => {
+          console.error(error);
+        })
       },
       error => Alert.alert(error.message),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
@@ -75,14 +66,6 @@ const Main = ({ history, location, match }) => {
       <Navbar />
       {/*(contacts)?<ContactList loadBack={getContacts}/>:<ImportContacts loadContacts={getContacts} {...profile} />*/}
       <SetTime />
-      <Pressable
-        onPress={testPush}
-        style={{ marginTop: 13 }}
-      >
-        <View style={{ backgroundColor: '#20232a', padding: 13, alignItems: 'center', borderRadius: 10 }}>
-          <Text style={{ color: '#ffffff' }}>Test push</Text>
-        </View>
-      </Pressable>
     </View>
   );
 };
