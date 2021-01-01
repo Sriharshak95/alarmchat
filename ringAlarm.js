@@ -73,11 +73,12 @@ const RingAlarm = () => {
   const time = useSelector(state => state.time);
 
   useEffect(() => {
-    // setTimeout(function(){
-    //   console.log("Derf")
-    // },AlarmFunction());
+    console.log(AlarmFunction());
+    setTimeout(function(){
+      onStartPlay();
+    },AlarmFunction());
     const der = AlarmFunction();
-    ScheduleAlarm("2020-12-23T11:59:33.388Z");
+    // ScheduleAlarm("2020-12-23T11:59:33.388Z");
 
   }, []);
 
@@ -121,7 +122,7 @@ const RingAlarm = () => {
   }
 
   const AlarmFunction = () => {
-    let setTime = moment(time, ['h:mm A']).format();
+    let setTime = moment("10:36 AM", ['h:mm A']).format();
     let presentTime = moment(new Date()).format();
     let x = new moment(setTime);
     let y = new moment(presentTime);
@@ -138,11 +139,11 @@ const RingAlarm = () => {
       presentTime = moment(new Date()).format();
       x = new moment(setTime);
       y = new moment(presentTime);
-      // diff = moment.duration(x.diff(y)).asMilliseconds();
-      return x;
+      diff = moment.duration(x.diff(y)).asMilliseconds();
+      return diff;
     }
     else {
-      return x;
+      return diff;
     }
   };
 
